@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ScanResult {
+  id                String   @id @default(cuid())
+  appName           String
+  appVersion        String?
+  platform          String
+  scanType          String
+  screenName        String
+  screenshot        String   // Base64 encoded image
+  accessibilityTree Json     // Platform-specific accessibility tree
+  metadata          Json     // Device info, scan duration, etc.
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  issues Issue[]
+  score  A11yScore?
+
+  @@map("scan_results")
+}
+
+model Issue {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  severity    String
+  category    String
+  wcagLevel   String
+  wcagCriteria String
+  element     Json     // Element information (id, className, bounds, etc.)
+  screenshot  String?  // Base64 encoded image
+  createdAt   DateTime @default(now())
+
+  // Relations
+  scanResultId     String
+  scanResult       ScanResult        @relation(fields: [scanResultId], references: [id], onDelete: Cascade)
+  remediationSteps RemediationStep[]
+
+  @@map("issues")
+}
+
+model RemediationStep {
+  id          String @id @default(cuid())
+  step        Int
+  title       String
+  description String
+  codeExample String?
+  resources   Json?  // Array of {title, url} objects
+
+  // Relations
+  issueId String
+  issue   Issue  @relation(fields: [issueId], references: [id], onDelete: Cascade)
+
+  @@map("remediation_steps")
+}
+
+model A11yScore {
+  id              String @id @default(cuid())
+  overall         Int
+  perceivable     Int
+  operable        Int
+  understandable  Int
+  robust          Int
+  totalIssues     Int
+  criticalIssues  Int
+  highIssues      Int
+  mediumIssues    Int
+  lowIssues       Int
+
+  // Relations
+  scanResultId String     @unique
+  scanResult   ScanResult @relation(fields: [scanResultId], references: [id], onDelete: Cascade)
+
+  @@map("a11y_scores")
+}

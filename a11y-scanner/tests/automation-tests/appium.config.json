@@ -1,0 +1,21 @@
+{
+  "server": {
+    "address": "localhost",
+    "port": 4723,
+    "keepAliveTimeout": 600,
+    "relaxedSecurity": true,
+    "allowInsecure": ["chromedriver_autodownload"],
+    "denyInsecure": [],
+    "logLevel": "info",
+    "logTimestamp": true,
+    "logNoColors": false,
+    "localTimezone": true,
+    "allowCors": true,
+    "basePath": "/wd/hub"
+  },
+  "use_plugins": [
+    "images",
+    "element-wait",
+    "gestures"
+  ]
+}
