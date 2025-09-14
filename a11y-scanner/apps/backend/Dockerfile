@@ -1,6 +1,9 @@
 # Multi-stage build for Node.js backend
 FROM node:18-alpine AS base
 
+# Install required system dependencies for Prisma
+RUN apk add --no-cache openssl openssl-dev
+
 # Install pnpm
 RUN npm install -g pnpm
 
@@ -32,6 +35,9 @@ RUN pnpm --filter @a11y-scanner/backend build
 
 # Production stage
 FROM node:18-alpine AS production
+
+# Install required system dependencies for Prisma
+RUN apk add --no-cache openssl openssl-dev
 
 # Install pnpm
 RUN npm install -g pnpm
