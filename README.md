@@ -143,42 +143,42 @@
 │  ┌─────────────────────────────────────────────────────────────────────────────────┐   │
 │  │                            DOCKER CONTAINERS                                    │   │
 │  │                                                                                 │   │
-│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐                │   │
-│  │  │a11y-scanner-│ │a11y-scanner-│ │a11y-scanner-│ │a11y-scanner-│                │   │
-│  │  │   web       │ │  backend    │ │     db      │ │   redis     │                │   │
-│  │  │             │ │             │ │             │ │             │                │   │
-│  │  │ Next.js     │ │ Node.js     │ │ PostgreSQL  │ │   Redis     │                │   │
-│  │  │ :3000       │ │ :4000       │ │ :5432       │ │ :6379       │                │   │
-│  │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘                │   │
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐              │   │
+│  │  │a11y-scanner-│ │a11y-scanner-│ │a11y-scanner-│ │a11y-scanner-│              │   │
+│  │  │   web       │ │  backend    │ │     db      │ │   redis     │              │   │
+│  │  │             │ │             │ │             │ │             │              │   │
+│  │  │ Next.js     │ │ Node.js     │ │ PostgreSQL  │ │   Redis     │              │   │
+│  │  │ :3000       │ │ :4000       │ │ :5432       │ │ :6379       │              │   │
+│  │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘              │   │
 │  │                                                                                 │   │
-│  │  Network: a11y-scanner-network                                                  │   │
-│  │  Orchestration: docker-compose.yml                                              │   │
+│  │  Network: a11y-scanner-network                                                 │   │
+│  │  Orchestration: docker-compose.yml                                            │   │
 │  └─────────────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                        │
+│                                                                                         │
 │  ┌─────────────────────────────────────────────────────────────────────────────────┐   │
 │  │                          MONOREPO STRUCTURE                                     │   │
 │  │                                                                                 │   │
-│  │  • Turborepo (Build System)                                                     │   │
-│  │  • pnpm Workspaces (Package Management)                                         │   │
-│  │  • Shared Dependencies & Build Pipeline                                         │   │
-│  │  • Cross-package Type Safety                                                    │   │
-│  │  • Unified Development Workflow                                                 │   │
+│  │  • Turborepo (Build System)                                                    │   │
+│  │  • pnpm Workspaces (Package Management)                                        │   │
+│  │  • Shared Dependencies & Build Pipeline                                        │   │
+│  │  • Cross-package Type Safety                                                   │   │
+│  │  • Unified Development Workflow                                                │   │
 │  └─────────────────────────────────────────────────────────────────────────────────┘   │
-└────────────────────────────────────────────────────────────────────────────────────────┘
+└─────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
 │                              DATA FLOW SUMMARY                                          │
 ├─────────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                         │
-│  1. MANUAL SCAN FLOW:                                                                   │
-│     Mobile App → Capture Screen + A11y Tree → POST /api/scan-results → Database         │
+│  1. MANUAL SCAN FLOW:                                                                  │
+│     Mobile App → Capture Screen + A11y Tree → POST /api/scan-results → Database       │
 │                                                                                         │
-│  2. AUTOMATED SCAN FLOW:                                                                │
-│     Appium Tests → Target App → Extract Data → POST /api/scan-results → Database        │
+│  2. AUTOMATED SCAN FLOW:                                                               │
+│     Appium Tests → Target App → Extract Data → POST /api/scan-results → Database      │
 │                                                                                         │
-│  3. DASHBOARD VIEW FLOW:                                                                │
-│     Web Dashboard → GET /api/metrics & /api/scan-results → Database → Display           │  
+│  3. DASHBOARD VIEW FLOW:                                                               │
+│     Web Dashboard → GET /api/metrics & /api/scan-results → Database → Display         │
 │                                                                                         │
-│  4. ANALYTICS FLOW:                                                                     │
-│     Backend → Aggregate Queries → PostgreSQL → Metrics API → Charts & Reports           │ 
+│  4. ANALYTICS FLOW:                                                                    │
+│     Backend → Aggregate Queries → PostgreSQL → Metrics API → Charts & Reports         │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
